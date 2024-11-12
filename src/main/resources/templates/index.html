@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>ログイン</title>
+</head>
+<body>
+	<form action="/book_forest_takayukimuranaka/login" method="POST">
+		<div>
+			<label for="userId">ID：</label>
+			<input type="number" name="userId" id="userId" required />
+		</div>
+		<div>
+			<label for="password">パスワード：</label>
+			<input type="text" name="password" id="password" required />
+		</div>
+		<input type="submit" value="ログイン" />
+		<div th:text="${errorMessage}"></div>
+	</form>
+</body>
+</html>

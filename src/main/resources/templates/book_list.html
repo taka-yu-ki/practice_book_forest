@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>書籍一覧</title>
+</head>
+<body>
+	<form action="/book_forest_takayukimuranaka/search-title" method="GET">
+		<input type="text" name="title" />
+		<input type="submit" value="検索" />
+	</form>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>タイトル</th>
+			<th>著作者</th>
+		</tr>
+		<tr th:each="book : ${books}">
+			<td th:text="${book.bookId}"></td>
+			<td th:text="${book.title}"></td>
+			<td th:text="${book.author}"></td>
+		</tr>
+	</table>
+</body>
+</html>
