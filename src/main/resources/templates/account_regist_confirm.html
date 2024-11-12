@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>ユーザー登録確認</title>
+</head>
+<body>
+	<form action="/book_forest_takayukimuranaka/register/complete" method="POST">
+		<div>
+			<p>お名前：</p>
+			<p th:text="${session.form.userName}"></p>
+		</div>
+		<div>
+			<p>パスワード：</p>
+			<p>※ 非表示</p>
+		</div>
+		<div>
+			<p>メールアドレス：</p>
+			<p th:text="${session.form.email}"></p>
+		</div>
+		<div>
+			<input type="hidden" name="userName" th:value="${session.form.userName}" required />
+			<input type="hidden" name="password" th:value="${session.form.password}" required />
+			<input type="hidden" name="email" th:value="${session.form.email}" required />
+			<input type="submit" value="登録" />
+		</div>
+	</form>
+	<form action="/book_forest_takayukimuranaka/register" method="GET">
+		<input type="hidden" name="userName" th:value="${session.form.userName}" required />
+		<input type="hidden" name="password" th:value="${session.form.password}" required />
+		<input type="hidden" name="email" th:value="${session.form.email}" required />
+        <input type="submit" value="戻る" />
+    </form>
+</body>
+</html>

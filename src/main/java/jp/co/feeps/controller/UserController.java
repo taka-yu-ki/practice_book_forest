@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
 import jp.co.feeps.dto.UserDTO;
+import jp.co.feeps.dto.UserRegisterDTO;
 import jp.co.feeps.form.UserLoginForm;
+import jp.co.feeps.form.UserRegisterForm;
 import jp.co.feeps.service.UserService;
 
 @Controller
@@ -24,11 +26,11 @@ public class UserController {
 	@PostMapping("/login")
 	public String loginUser(UserLoginForm form, HttpSession session, Model model) {
 		try {
-			UserDTO user = userService.loginCheck(form);
+			UserDTO userDTO = userService.loginCheck(form);
 
-			session.setAttribute("user", user);
+			session.setAttribute("user", userDTO);
 
-			return "/book_list";
+			return "redirect:/";
 		} catch (RuntimeException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 
@@ -37,7 +39,29 @@ public class UserController {
 	}
 
 	@GetMapping("/register")
-	public String register() {
+	public String register(UserRegisterForm form, HttpSession session) {
+		session.setAttribute("form", form);
+
 		return "/account_regist";
+	}
+
+	@PostMapping("/register/confirm")
+	public String registUser(UserRegisterForm form, HttpSession session) {
+		session.setAttribute("form", form);
+
+		return "/account_regist_confirm";
+	}
+
+	@PostMapping("/register/complete")
+	public String confirmUser(UserRegisterForm form, Model model, HttpSession session) {
+		UserRegisterDTO userRegisterDTO = userService.registUser(form);
+
+		session.removeAttribute("userName");
+		session.removeAttribute("password");
+		session.removeAttribute("email");
+
+		model.addAttribute("userId", userRegisterDTO.getUserId());
+
+		return "/account_regist_complete";
 	}
 }
