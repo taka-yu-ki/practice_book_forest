@@ -39,8 +39,7 @@ public class UserController {
 	}
 
 	@GetMapping("/register")
-	public String register(UserRegisterForm form, HttpSession session) {
-		session.setAttribute("form", form);
+	public String register() {
 
 		return "/account_regist";
 	}
