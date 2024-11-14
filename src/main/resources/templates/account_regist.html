@@ -5,18 +5,19 @@
 <title>ユーザー登録</title>
 </head>
 <body>
+	<a href="/book_forest_takayukimuranaka/login">ログイン画面へ</a>
 	<form action="/book_forest_takayukimuranaka/register/confirm" method="POST">
 		<div>
 			<label for="userName">お名前：</label>
-			<input type="text" name="userName" id="userName" th:value="${session.form.userName}" required />
+			<input type="text" name="userName" id="userName" required />
 		</div>
 		<div>
 			<label for="password">パスワード：</label>
-			<input type="text" name="password" id="password" th:value="${session.form.password}" required />
+			<input type="text" name="password" id="password" required />
 		</div>
 		<div>
 			<label for="email">メールアドレス：</label>
-			<input type="text" name="email" id="email" th:value="${session.form.email}" required />
+			<input type="text" name="email" id="email" required />
 		</div>
 		<input type="submit" value="確認" />
 	</form>
