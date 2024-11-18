@@ -6,6 +6,7 @@
 </head>
 <body>
 	<p><span th:text="${session.user.userName}"></span> さんようこそ。</p>
+	<a href="/book_forest_takayukimuranaka/logout">ログアウト</a>
 	<form action="/book_forest_takayukimuranaka/search-title" method="GET">
 		<input type="text" name="title" />
 		<input type="submit" value="検索" />
