@@ -38,6 +38,13 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/logout")
+	public String logoutUser(HttpSession session) {
+		session.removeAttribute("user");
+
+		return "/index";
+	}
+
 	@GetMapping("/register")
 	public String register() {
 
