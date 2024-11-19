@@ -5,9 +5,9 @@
 <title>書籍一覧</title>
 </head>
 <body>
-	<p><span th:text="${session.user.userName}"></span> さんようこそ。</p>
-	<a href="/book_forest_takayukimuranaka/logout">ログアウト</a>
-	<form action="/book_forest_takayukimuranaka/search-title" method="GET">
+	<p><a href="/book_forest_takayukimuranaka/user/edit"><span th:text="${session.user.userName}"></span></a> さんようこそ。</p>
+	<a href="/book_forest_takayukimuranaka/auth/logout">ログアウト</a>
+	<form action="/book_forest_takayukimuranaka/books/search" method="GET">
 		<input type="text" name="title" />
 		<input type="submit" value="検索" />
 	</form>
