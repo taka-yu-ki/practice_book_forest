@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>ユーザー登録</title>
+<title>ユーザー編集</title>
 </head>
 <body>
-	<a href="/book_forest_takayukimuranaka/auth/login">ログイン画面へ</a>
-	<form action="/book_forest_takayukimuranaka/user/register/confirm" method="POST">
+	<form action="/book_forest_takayukimuranaka/user/edit/confirm" method="POST">
 		<div>
 			<label for="userName">お名前：</label>
-			<input type="text" name="userName" id="userName" required />
+			<input type="text" name="userName" id="userName" th:value="${session.user.userName}" required />
 		</div>
 		<div>
 			<label for="password">パスワード：</label>
@@ -17,9 +16,10 @@
 		</div>
 		<div>
 			<label for="email">メールアドレス：</label>
-			<input type="text" name="email" id="email" />
+			<input type="text" name="email" id="email" th:value="${session.user.email}" />
 		</div>
 		<input type="submit" value="確認" />
+			<input type="button" onClick="location.href='/book_forest_takayukimuranaka'" value="戻る" />
 	</form>
 </body>
 </html>

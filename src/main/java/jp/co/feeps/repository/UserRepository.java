@@ -10,4 +10,6 @@ import jp.co.feeps.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findByUserIdAndPassword(int userId, String password);
+
+	Optional<User> findByUserId(int userId);
 }

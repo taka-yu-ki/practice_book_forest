@@ -19,16 +19,22 @@ public class BookService {
 	public List<BookDTO> getBooks() {
 		List<Book> books = bookRepository.findAll();
 
-		List<BookDTO> bookDTOs = books.stream()
-				.map(book -> new BookDTO(book.getBookId(), book.getTitle(), book.getAuthor()))
-				.collect(Collectors.toList());
+		List<BookDTO> bookDTOs = books.stream().map(book -> {
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setBookId(book.getBookId());
+			bookDTO.setTitle(book.getTitle());
+			bookDTO.setAuthor(book.getAuthor());
+
+			return bookDTO;
+		}).collect(Collectors.toList());
 
 		return bookDTOs;
 	}
 
-	public List<BookDTO> findBooksByTitle(BookSearchForm form) {
-		String title = form.getTitle();
+	public List<BookDTO> searchBooks(BookSearchForm form) {
 		List<Book> books;
+
+		String title = form.getTitle();
 
 		if (title != null && !title.trim().isEmpty()) {
 			books = bookRepository.findByTitleContaining(title);
@@ -36,9 +42,14 @@ public class BookService {
 			books = bookRepository.findAll();
 		}
 
-		List<BookDTO> bookDTOs = books.stream()
-				.map(book -> new BookDTO(book.getBookId(), book.getTitle(), book.getAuthor()))
-				.collect(Collectors.toList());
+		List<BookDTO> bookDTOs = books.stream().map(book -> {
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setBookId(book.getBookId());
+			bookDTO.setTitle(book.getTitle());
+			bookDTO.setAuthor(book.getAuthor());
+
+			return bookDTO;
+		}).collect(Collectors.toList());
 
 		return bookDTOs;
 	}

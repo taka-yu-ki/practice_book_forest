@@ -5,15 +5,13 @@
 <title>ログイン</title>
 </head>
 <body>
-	<a href="/book_forest_takayukimuranaka/register">アカウント登録画面へ</a>
-	<form action="/book_forest_takayukimuranaka/login" method="POST">
+	<a href="/book_forest_takayukimuranaka/user/register">アカウント登録画面へ</a>
+	<form action="/book_forest_takayukimuranaka/auth/login" method="POST">
 		<div>
-			<label for="userId">ID：</label>
-			<input type="number" name="userId" id="userId" required />
+			<label for="userId">ID：</label> <input type="number" name="userId" id="userId" required />
 		</div>
 		<div>
-			<label for="password">パスワード：</label>
-			<input type="text" name="password" id="password" required />
+			<label for="password">パスワード：</label> <input type="text" name="password" id="password" required />
 		</div>
 		<input type="submit" value="ログイン" />
 		<div th:text="${errorMessage}"></div>
