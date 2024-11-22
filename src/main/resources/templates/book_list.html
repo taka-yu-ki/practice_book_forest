@@ -11,6 +11,8 @@
 		<input type="text" name="title" />
 		<input type="submit" value="検索" />
 	</form>
+	<p>※貸出期間は本日から<span th:text="${rentalDate}"></span>日間です。</p>
+	<p th:if="${errorMessage}" th:text="${errorMessage}"></p>
 	<table>
 		<tr>
 			<th>ID</th>
@@ -21,6 +23,7 @@
 			<td th:text="${book.bookId}"></td>
 			<td th:text="${book.title}"></td>
 			<td th:text="${book.author}"></td>
+			<td><input type="button" th:onclick="|location.href='/book_forest_takayukimuranaka/books/${book.bookId}/rental'|" value="借りる" /></td>
 		</tr>
 	</table>
 </body>

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class Book {
 	@Id
+	@Column(name = "book_id")
 	private int bookId;
 	@Column(nullable = false)
 	private String title;
