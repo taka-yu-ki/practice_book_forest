@@ -1,6 +1,7 @@
 package jp.co.feeps.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import jp.co.feeps.constants.DateConstants;
 import jp.co.feeps.dto.BookDTO;
 import jp.co.feeps.dto.RentalBookDTO;
+import jp.co.feeps.dto.RentalDTO;
 import jp.co.feeps.dto.UserDTO;
 import jp.co.feeps.form.BookSearchForm;
 import jp.co.feeps.form.RentalForm;
@@ -39,10 +41,19 @@ public class BookController {
 	}
 
 	@GetMapping("")
-	public String index(Model model) {
+	public String index(HttpSession session, Model model) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		int userId = user.getUserId();
+
 		List<BookDTO> books = bookService.getBooks();
+		List<RentalDTO> rentalBooks = rentalService.getRentalBooks(userId);
+
+		if (rentalBooks == null) {
+			rentalBooks = new ArrayList<>();
+		}
 
 		model.addAttribute("books", books);
+		model.addAttribute("rentalBooks", rentalBooks);
 
 		return "book_list";
 	}

@@ -1,6 +1,6 @@
 package jp.co.feeps.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jp.co.feeps.entity.Book;
 import jp.co.feeps.entity.User;
@@ -13,6 +13,6 @@ public class RentalDTO {
 	private int rentalId;
 	private User user;
 	private Book book;
-	private Date rentalDate;
-	private Date dueDate;
+	private LocalDate rentalLocalDate;
+	private LocalDate dueLocalDate;
 }

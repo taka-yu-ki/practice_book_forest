@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>書籍レンタル画面</title>
+<title>貸出中書籍確認画面</title>
 </head>
 <body>
 	<table>
@@ -10,20 +10,17 @@
 			<th>書籍ID</th>
 			<th>タイトル</th>
 			<th>著者</th>
+			<th>貸出日</th>
 			<th>返却日</th>
 		</tr>
 		<tr>
 			<td th:text="${rentalBook.bookId}"></td>
 			<td th:text="${rentalBook.title}"></td>
 			<td th:text="${rentalBook.author}"></td>
+			<td th:text="${#temporals.format(rentalBook.rentalLocalDate, 'yyyy年MM月dd日')}"></td>
 			<td th:text="${#temporals.format(rentalBook.dueLocalDate, 'yyyy年MM月dd日')}"></td>
 		</tr>
 	</table>
-	<form th:action="|/book_forest_takayukimuranaka/books/${rentalBook.bookId}/rental|" method="POST">
-		<input type="hidden" name="rentalLocalDate" th:value="${rentalBook.rentalLocalDate}" />
-		<input type="hidden" name="dueLocalDate" th:value="${rentalBook.dueLocalDate}" />
-		<input type="submit" value="借りる" />
-		<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" />
-	</form>
+	<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" />
 </body>
 </html>
