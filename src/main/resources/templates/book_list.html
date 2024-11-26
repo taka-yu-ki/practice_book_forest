@@ -26,5 +26,15 @@
 			<td><input type="button" th:onclick="|location.href='/book_forest_takayukimuranaka/books/${book.bookId}/rental'|" value="借りる" /></td>
 		</tr>
 	</table>
+	<div th:each="rentalBook: ${rentalBooks}">
+		<form action="/book_forest_takayukimuranaka/rentals" method="GET">
+			<input type="hidden" name="bookId" th:value="${rentalBook.book.bookId}" />
+			<input type="hidden" name="title" th:value="${rentalBook.book.title}" />
+			<input type="hidden" name="author" th:value="${rentalBook.book.author}" />
+			<input type="hidden" name="rentalLocalDate" th:value="${rentalBook.rentalLocalDate}" />
+			<input type="hidden" name="dueLocalDate" th:value="${rentalBook.dueLocalDate}" />
+			<input type="submit" th:value="${rentalBook.book.title}" />
+		</form>
+	</div>
 </body>
 </html>

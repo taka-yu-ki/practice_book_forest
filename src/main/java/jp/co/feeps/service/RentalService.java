@@ -3,14 +3,20 @@ package jp.co.feeps.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.feeps.dto.RentalBookDTO;
+import jp.co.feeps.dto.RentalDTO;
 import jp.co.feeps.entity.Book;
 import jp.co.feeps.entity.Rental;
 import jp.co.feeps.entity.User;
+import jp.co.feeps.form.RentalDetailForm;
 import jp.co.feeps.form.RentalForm;
 import jp.co.feeps.repository.BookRepository;
 import jp.co.feeps.repository.RentalRepository;
@@ -51,5 +57,43 @@ public class RentalService {
 		rental.setDueDate(dueDate);
 
 		rentalRepository.save(rental);
+	}
+
+	public List<RentalDTO> getRentalBooks(int userId) {
+		List<Rental> rentalBooks = rentalRepository.findByUserUserId(userId);
+
+		List<RentalDTO> rentalBookDTOs = rentalBooks.stream().map(rentalBook -> {
+			LocalDate rentalLocalDate = rentalBook.getRentalDate().toInstant().atZone(ZoneId.systemDefault())
+					.toLocalDate();
+			LocalDate dueLocalDate = rentalBook.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+			RentalDTO rentalBookDTO = new RentalDTO();
+			rentalBookDTO.setRentalId(rentalBook.getRentalId());
+			rentalBookDTO.setUser(rentalBook.getUser());
+			rentalBookDTO.setBook(rentalBook.getBook());
+			rentalBookDTO.setRentalLocalDate(rentalLocalDate);
+			rentalBookDTO.setDueLocalDate(dueLocalDate);
+
+			return rentalBookDTO;
+		}).collect(Collectors.toList());
+
+		return rentalBookDTOs;
+	}
+
+	public RentalBookDTO convertFormToDTO(RentalDetailForm form) {
+		int bookId = form.getBookId();
+		String title = form.getTitle();
+		String author = form.getAuthor();
+		LocalDate rentalLocalDate = form.getRentalLocalDate();
+		LocalDate dueLocalDate = form.getDueLocalDate();
+
+		RentalBookDTO rentalBook = new RentalBookDTO();
+		rentalBook.setBookId(bookId);
+		rentalBook.setTitle(title);
+		rentalBook.setAuthor(author);
+		rentalBook.setRentalLocalDate(rentalLocalDate);
+		rentalBook.setDueLocalDate(dueLocalDate);
+
+		return rentalBook;
 	}
 }
