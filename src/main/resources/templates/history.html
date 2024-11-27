@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>貸出履歴画面</title>
+</head>
+<body>
+	<div th:if="${isEmptyRentalHistory}">
+		<p>貸出履歴はありません</p>
+	</div>
+	<table>
+		<tr>
+			<th>タイトル</th>
+			<th>著者</th>
+			<th>貸出日</th>
+		</tr>
+		<tr th:each="rentalHistory : ${rentalHistories}">
+			<td th:text="${rentalHistory.title}"></td>
+			<td th:text="${rentalHistory.author}"></td>
+			<td th:text="${#temporals.format(rentalHistory.rentalLocalDate, 'yyyy年MM月dd日')}"></td>
+		</tr>
+	</table>
+	<input type="button" onclick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" />
+</body>
+</html>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.feeps.dto.RentalBookDTO;
 import jp.co.feeps.dto.RentalDTO;
+import jp.co.feeps.dto.RentalHistoryDTO;
 import jp.co.feeps.entity.Book;
 import jp.co.feeps.entity.Rental;
 import jp.co.feeps.entity.User;
@@ -60,17 +61,17 @@ public class RentalService {
 	}
 
 	public List<RentalDTO> getRentalBooks(int userId) {
-		List<Rental> rentalBooks = rentalRepository.findByUserUserId(userId);
+		Date today = new Date();
+		List<Rental> rentals = rentalRepository.findBetweenRentalDateAndDueDate(userId, today);
 
-		List<RentalDTO> rentalBookDTOs = rentalBooks.stream().map(rentalBook -> {
-			LocalDate rentalLocalDate = rentalBook.getRentalDate().toInstant().atZone(ZoneId.systemDefault())
-					.toLocalDate();
-			LocalDate dueLocalDate = rentalBook.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		List<RentalDTO> rentalBookDTOs = rentals.stream().map(rental -> {
+			LocalDate rentalLocalDate = rental.getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate dueLocalDate = rental.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 			RentalDTO rentalBookDTO = new RentalDTO();
-			rentalBookDTO.setRentalId(rentalBook.getRentalId());
-			rentalBookDTO.setUser(rentalBook.getUser());
-			rentalBookDTO.setBook(rentalBook.getBook());
+			rentalBookDTO.setRentalId(rental.getRentalId());
+			rentalBookDTO.setUser(rental.getUser());
+			rentalBookDTO.setBook(rental.getBook());
 			rentalBookDTO.setRentalLocalDate(rentalLocalDate);
 			rentalBookDTO.setDueLocalDate(dueLocalDate);
 
@@ -95,5 +96,22 @@ public class RentalService {
 		rentalBook.setDueLocalDate(dueLocalDate);
 
 		return rentalBook;
+	}
+
+	public List<RentalHistoryDTO> getRentalHistories(int userId) {
+		List<Rental> rentals = rentalRepository.findByUserUserId(userId);
+
+		List<RentalHistoryDTO> rentalHistoryDTOs = rentals.stream().map(rental -> {
+			LocalDate rentalLocalDate = rental.getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+			RentalHistoryDTO rentalHistoryDTO = new RentalHistoryDTO();
+			rentalHistoryDTO.setTitle(rental.getBook().getTitle());
+			rentalHistoryDTO.setAuthor(rental.getBook().getAuthor());
+			rentalHistoryDTO.setRentalLocalDate(rentalLocalDate);
+
+			return rentalHistoryDTO;
+		}).collect(Collectors.toList());
+
+		return rentalHistoryDTOs;
 	}
 }
