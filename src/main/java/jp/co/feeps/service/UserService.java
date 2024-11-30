@@ -40,7 +40,6 @@ public class UserService {
 
 	public UserDTO updateUser(int userId, UserEditForm form) {
 		Optional<User> userOpt = userRepository.findByUserId(userId);
-
 		User user = (User) userOpt.orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
 
 		String userName = form.getUserName();
@@ -56,6 +55,7 @@ public class UserService {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUserId(userId);
 		userDTO.setUserName(userName);
+		userDTO.setPassword(password);
 		userDTO.setEmail(email);
 
 		return userDTO;

@@ -27,19 +27,15 @@ public class UserController {
 	}
 
 	@PostMapping("/register/confirm")
-	public String confirmRegister(UserRegisterForm form, HttpSession session) {
-		session.setAttribute("form", form);
+	public String confirmRegister(UserRegisterForm form, Model model) {
+		model.addAttribute("form", form);
 
 		return "account_regist_confirm";
 	}
 
 	@PostMapping("/register/complete")
-	public String completeRegister(UserRegisterForm form, HttpSession session, Model model) {
+	public String completeRegister(UserRegisterForm form, Model model) {
 		UserRegisterDTO userRegisterDTO = userService.registUser(form);
-
-		session.removeAttribute("userName");
-		session.removeAttribute("password");
-		session.removeAttribute("email");
 
 		model.addAttribute("userId", userRegisterDTO.getUserId());
 
@@ -47,13 +43,17 @@ public class UserController {
 	}
 
 	@GetMapping("/edit")
-	public String showEditForm(HttpSession session) {
+	public String showEditForm(HttpSession session, Model model) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+
+		model.addAttribute("user", user);
+
 		return "account_update";
 	}
 
 	@PostMapping("/edit/confirm")
-	public String comfirmEdit(UserEditForm form, HttpSession session) {
-		session.setAttribute("form", form);
+	public String comfirmEdit(UserEditForm form, Model model) {
+		model.addAttribute("form", form);
 
 		return "account_update_confirm";
 	}

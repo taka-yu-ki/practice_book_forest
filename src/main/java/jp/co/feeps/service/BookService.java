@@ -46,6 +46,10 @@ public class BookService {
 			books = bookRepository.findAll();
 		}
 
+		if (books.isEmpty()) {
+			throw new RuntimeException("お探しの書籍は見つかりませんでした。");
+		}
+
 		List<BookDTO> bookDTOs = books.stream().map(book -> {
 			BookDTO bookDTO = new BookDTO();
 			bookDTO.setBookId(book.getBookId());

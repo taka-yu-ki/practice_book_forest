@@ -1,7 +1,6 @@
 package jp.co.feeps.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +47,6 @@ public class BookController {
 		List<BookDTO> books = bookService.getBooks();
 		List<RentalDTO> rentalBooks = rentalService.getRentalBooks(userId);
 
-		if (rentalBooks == null) {
-			rentalBooks = new ArrayList<>();
-		}
-
 		model.addAttribute("books", books);
 		model.addAttribute("rentalBooks", rentalBooks);
 
@@ -59,10 +54,20 @@ public class BookController {
 	}
 
 	@GetMapping("/search")
-	public String search(BookSearchForm form, Model model) {
-		List<BookDTO> books = bookService.searchBooks(form);
+	public String search(BookSearchForm form, HttpSession session, Model model) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		int userId = user.getUserId();
 
-		model.addAttribute("books", books);
+		try {
+			List<BookDTO> books = bookService.searchBooks(form);
+			model.addAttribute("books", books);
+		} catch (RuntimeException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			model.addAttribute("books", List.of());
+		}
+
+		List<RentalDTO> rentalBooks = rentalService.getRentalBooks(userId);
+		model.addAttribute("rentalBooks", rentalBooks);
 
 		return "book_list";
 	}

@@ -2,11 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>ユーザー登録完了</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap(css)の宣言 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap(javascript)の宣言 -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<title>アカウント登録完了画面</title>
 </head>
 <body>
-	<p>登録が完了しました。</p>
-	<p>ユーザーIDは <span th:text="${userId}"></span> です。</p>
-	<a href="/book_forest_takayukimuranaka/auth/login">ログインへ戻る</a>
+	<div class="d-flex flex-column vh-100">
+		<header class="border-bottom px-3 py-4">
+			<div class="d-flex align-items-center justify-content-between">
+				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+					Feepsネット図書館～図書の森～
+				</a> 
+				<a href="/book_forest_takayukimuranaka/auth/login" class="text-center">
+					ログイン画面へ
+				</a>
+			</div>
+		</header>
+		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<div class="card" style="width: 26rem;">
+				<div class="card-body px-5 py-4">
+					<p class="fw-semibold">アカウント登録が完了しました。</p>
+					<p class="mt-1">
+						お客様のログインIDは <span th:text="${userId}" class="fs-5 fw-bold"></span> です。<br />
+						ユーザーIDはこの画面でのみ表示されます。<br />
+						お忘れのないようご注意ください。
+					</p>
+					<div class="d-flex justify-content-center">
+<input type="button" onClick="location.href='/book_forest_takayukimuranaka/auth/login'" value="ログイン画面へ戻る" class="btn btn-secondary w-100" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="bg-dark-subtle">
+			<div class="text-center">
+				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

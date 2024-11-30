@@ -2,24 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap(css)の宣言 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap(javascript)の宣言 -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 <title>貸出履歴画面</title>
 </head>
 <body>
-	<div th:if="${isEmptyRentalHistory}">
-		<p>貸出履歴はありません</p>
+	<div class="d-flex flex-column vh-100">
+		<header class="border-bottom px-3 py-4">
+			<div class="d-flex align-items-center justify-content-between">
+				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+					Feepsネット図書館～図書の森～
+				</a> 
+				<div class="d-flex align-items-center fs-5">
+					<div class="me-3">
+						ようこそ <a href="/book_forest_takayukimuranaka/user/edit"><span th:text="${session.user.userName}"></span></a> さん
+					</div>
+					<a href="/book_forest_takayukimuranaka/rentals/history" class="btn btn-outline-secondary me-3">貸出履歴</a>
+					<a href="/book_forest_takayukimuranaka/auth/logout" class="btn btn-outline-danger">ログアウト</a>
+				</div>
+			</div>
+		</header>
+		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<div>
+				<div class="card p-3" style="width: 48rem;">
+					<div class="card-body">
+						<h5 class="card-title fw-bold">
+							貸出履歴
+						</h5>
+						<div th:if="${#lists.isEmpty(rentalHistories)}" class="mt-4 d-flex justify-content-center">
+							貸出履歴はありません
+						</div>
+						<table th:unless="${#lists.isEmpty(rentalHistories)}" class="table table-striped text-center table-bordered mt-4 border">
+							<thead>
+								<tr>
+									<th scope="col">タイトル</th>
+									<th scope="col">著者</th>
+									<th scope="col">貸出日</th>
+								</tr>
+							<thead>
+							<tbody class="table-group-divider">
+								<tr th:each="rentalHistory : ${rentalHistories}">
+									<td th:text="${rentalHistory.title}"></td>
+									<td th:text="${rentalHistory.author}"></td>
+									<td th:text="${#temporals.format(rentalHistory.rentalLocalDate, 'yyyy年MM月dd日')}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="d-flex justify-content-end mt-4">
+							<input type="button" onclick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" class="btn btn-secondary" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="bg-dark-subtle">
+			<div class="text-center">
+				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer>
 	</div>
-	<table>
-		<tr>
-			<th>タイトル</th>
-			<th>著者</th>
-			<th>貸出日</th>
-		</tr>
-		<tr th:each="rentalHistory : ${rentalHistories}">
-			<td th:text="${rentalHistory.title}"></td>
-			<td th:text="${rentalHistory.author}"></td>
-			<td th:text="${#temporals.format(rentalHistory.rentalLocalDate, 'yyyy年MM月dd日')}"></td>
-		</tr>
-	</table>
-	<input type="button" onclick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" />
 </body>
 </html>
