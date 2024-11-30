@@ -23,14 +23,14 @@ public class UserController {
 	@GetMapping("/register")
 	public String showRegisterForm() {
 
-		return "account_regist";
+		return "user/account_regist";
 	}
 
 	@PostMapping("/register/confirm")
 	public String confirmRegister(UserRegisterForm form, Model model) {
 		model.addAttribute("form", form);
 
-		return "account_regist_confirm";
+		return "user/account_regist_confirm";
 	}
 
 	@PostMapping("/register/complete")
@@ -39,7 +39,7 @@ public class UserController {
 
 		model.addAttribute("userId", userRegisterDTO.getUserId());
 
-		return "account_regist_complete";
+		return "user/account_regist_complete";
 	}
 
 	@GetMapping("/edit")
@@ -48,14 +48,14 @@ public class UserController {
 
 		model.addAttribute("user", user);
 
-		return "account_update";
+		return "user/account_update";
 	}
 
 	@PostMapping("/edit/confirm")
 	public String comfirmEdit(UserEditForm form, Model model) {
 		model.addAttribute("form", form);
 
-		return "account_update_confirm";
+		return "user/account_update_confirm";
 	}
 
 	@PostMapping("/edit/update")

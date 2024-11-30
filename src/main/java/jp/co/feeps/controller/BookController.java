@@ -50,7 +50,7 @@ public class BookController {
 		model.addAttribute("books", books);
 		model.addAttribute("rentalInfos", rentalInfos);
 
-		return "book_list";
+		return "book/book_list";
 	}
 
 	@GetMapping("/search")
@@ -69,7 +69,7 @@ public class BookController {
 		List<RentalInfoDTO> rentalInfos = rentalService.getRentalInfos(userId);
 		model.addAttribute("rentalInfos", rentalInfos);
 
-		return "book_list";
+		return "book/book_list";
 	}
 
 	@GetMapping("/{bookId}/rental")
@@ -85,7 +85,7 @@ public class BookController {
 
 			model.addAttribute("rentalRequest", rentalRequest);
 
-			return "rental";
+			return "book/rental";
 		} catch (IllegalStateException e) {
 			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 

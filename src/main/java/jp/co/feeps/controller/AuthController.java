@@ -20,7 +20,7 @@ public class AuthController {
 
 	@GetMapping("/login")
 	public String showLoginForm() {
-		return "index";
+		return "auth/index";
 	}
 
 	@PostMapping("/login")
@@ -34,7 +34,7 @@ public class AuthController {
 		} catch (RuntimeException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 
-			return "index";
+			return "auth/index";
 		}
 	}
 

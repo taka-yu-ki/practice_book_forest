@@ -27,7 +27,7 @@ public class RentalController {
 
 		model.addAttribute("rentalDetail", rentalDetail);
 
-		return "current_rental_book";
+		return "rental/current_rental_book";
 	}
 
 	@GetMapping("/history")
@@ -39,6 +39,6 @@ public class RentalController {
 
 		model.addAttribute("rentalHistories", rentalHistories);
 
-		return "history";
+		return "rental/history";
 	}
 }
