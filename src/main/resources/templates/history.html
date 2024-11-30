@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css ファイルの宣言 -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
 <!-- Bootstrap(css)の宣言 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- Bootstrap(javascript)の宣言 -->
@@ -11,9 +13,9 @@
 </head>
 <body>
 	<div class="d-flex flex-column vh-100">
-		<header class="border-bottom px-3 py-4">
+		<header class="px-3 py-4 bg-dark-subtle border-bottom border-dark-subtle">
 			<div class="d-flex align-items-center justify-content-between">
-				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+				<a href="/book_forest_takayukimuranaka" class="link-body-emphasis text-decoration-none fs-4">
 					Feepsネット図書館～図書の森～
 				</a> 
 				<div class="d-flex align-items-center fs-5">
@@ -27,12 +29,12 @@
 		</header>
 		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
 			<div>
-				<div class="card p-3" style="width: 48rem;">
+				<div class="card card-size-lg p-3">
 					<div class="card-body">
 						<h5 class="card-title fw-bold">
 							貸出履歴
 						</h5>
-						<div th:if="${#lists.isEmpty(rentalHistories)}" class="mt-4 d-flex justify-content-center">
+						<div th:if="${#lists.isEmpty(rentalHistories)}" class="d-flex justify-content-center mt-4">
 							貸出履歴はありません
 						</div>
 						<table th:unless="${#lists.isEmpty(rentalHistories)}" class="table table-striped text-center table-bordered mt-4 border">
@@ -58,9 +60,9 @@
 				</div>
 			</div>
 		</div>
-		<footer class="bg-dark-subtle">
+		<footer class="bg-light-subtle border-top bg-light-subtle">
 			<div class="text-center">
-				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+				<div class="py-3 text-muted">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
 			</div>
 		</footer>
 	</div>

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RentalBookDTO {
+public class RentalRequestDTO {
 	private int bookId;
 	private String title;
 	private String author;

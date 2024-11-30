@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 import jp.co.feeps.constants.DateConstants;
 import jp.co.feeps.dto.BookDTO;
-import jp.co.feeps.dto.RentalBookDTO;
-import jp.co.feeps.dto.RentalDTO;
+import jp.co.feeps.dto.RentalInfoDTO;
+import jp.co.feeps.dto.RentalRequestDTO;
 import jp.co.feeps.dto.UserDTO;
 import jp.co.feeps.form.BookSearchForm;
 import jp.co.feeps.form.RentalForm;
@@ -39,16 +39,16 @@ public class BookController {
 		model.addAttribute("rentalDate", rentalDate);
 	}
 
-	@GetMapping("")
+	@GetMapping
 	public String index(HttpSession session, Model model) {
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		int userId = user.getUserId();
 
 		List<BookDTO> books = bookService.getBooks();
-		List<RentalDTO> rentalBooks = rentalService.getRentalBooks(userId);
+		List<RentalInfoDTO> rentalInfos = rentalService.getRentalInfos(userId);
 
 		model.addAttribute("books", books);
-		model.addAttribute("rentalBooks", rentalBooks);
+		model.addAttribute("rentalInfos", rentalInfos);
 
 		return "book_list";
 	}
@@ -66,8 +66,8 @@ public class BookController {
 			model.addAttribute("books", List.of());
 		}
 
-		List<RentalDTO> rentalBooks = rentalService.getRentalBooks(userId);
-		model.addAttribute("rentalBooks", rentalBooks);
+		List<RentalInfoDTO> rentalInfos = rentalService.getRentalInfos(userId);
+		model.addAttribute("rentalInfos", rentalInfos);
 
 		return "book_list";
 	}
@@ -81,9 +81,9 @@ public class BookController {
 		try {
 			rentalService.checkRentalBook(userId, bookId);
 
-			RentalBookDTO rentalBook = bookService.getRentalBook(bookId);
+			RentalRequestDTO rentalRequest = bookService.getRentalRequest(bookId);
 
-			model.addAttribute("rentalBook", rentalBook);
+			model.addAttribute("rentalRequest", rentalRequest);
 
 			return "rental";
 		} catch (IllegalStateException e) {
@@ -95,7 +95,8 @@ public class BookController {
 	}
 
 	@PostMapping("/{bookId}/rental")
-	public String rentalBook(@PathVariable int bookId, RentalForm form, HttpSession session, Model model) {
+	public String rentalBook(@PathVariable int bookId, RentalForm form, HttpSession session, Model model,
+			RedirectAttributes redirectAttribute) {
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		int userId = user.getUserId();
 
@@ -105,9 +106,9 @@ public class BookController {
 			return "redirect:/books";
 		} catch (ParseException e) {
 
-			model.addAttribute("errorMessage", e.getMessage());
+			redirectAttribute.addAttribute("errorMessage", e.getMessage());
 
-			return "book_list";
+			return "redirect:/books";
 		}
 	}
 }

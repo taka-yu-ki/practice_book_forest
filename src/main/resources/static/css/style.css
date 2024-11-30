@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.card-size-sm {
+	width: 22rem;
+}
+
+.card-size-md {
+	width: 26rem;
+}
+
+.card-size-lg {
+	width: 48rem;
+}

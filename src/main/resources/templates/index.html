@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css ファイルの宣言 -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
 <!-- Bootstrap(css)の宣言 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- Bootstrap(javascript)の宣言 -->
@@ -11,9 +13,9 @@
 </head>
 <body>
 	<div class="d-flex flex-column vh-100">
-		<header class="border-bottom px-3 py-4">
+		<header class="px-3 py-4 bg-dark-subtle border-bottom border-dark-subtle">
 			<div class="d-flex align-items-center justify-content-between">
-				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+				<a href="/book_forest_takayukimuranaka" class="link-body-emphasis text-decoration-none fs-4">
 					Feepsネット図書館～図書の森～
 				</a> 
 				<a href="/book_forest_takayukimuranaka/user/register" class="text-center">
@@ -23,7 +25,7 @@
 		</header>
 		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
 			<form action="/book_forest_takayukimuranaka/auth/login" method="POST">
-				<div class="card" style="width: 22rem;">
+				<div class="card card-size-sm">
 					<div class="card-body px-5 py-4">
 						<h5 class="card-title fw-bold">
 							ログイン
@@ -46,9 +48,9 @@
 				</div>
 			</form>
 		</div>
-		<footer class="bg-dark-subtle">
+		<footer class="bg-light-subtle border-top bg-light-subtle">
 			<div class="text-center">
-				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+				<div class="py-3 text-muted">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
 			</div>
 		</footer>
 	</div>

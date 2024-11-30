@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css ファイルの宣言 -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
 <!-- Bootstrap(css)の宣言 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- Bootstrap(javascript)の宣言 -->
@@ -11,9 +13,9 @@
 </head>
 <body>
 	<div class="d-flex flex-column vh-100">
-		<header class="border-bottom px-3 py-4">
+		<header class="px-3 py-4 bg-dark-subtle border-bottom border-dark-subtle">
 			<div class="d-flex align-items-center justify-content-between">
-				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+				<a href="/book_forest_takayukimuranaka" class="link-body-emphasis text-decoration-none fs-4">
 					Feepsネット図書館～図書の森～
 				</a> 
 				<div class="d-flex align-items-center fs-5">
@@ -25,35 +27,38 @@
 			</div>
 		</header>
 		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
-			<div class="card">
+			<div class="card card-size-sm">
 				<div class="card-body px-5 py-4">
-					<div class="mt-4 fs-5">
-						<span class="fw-bold">書籍ID:</span>
-						<span th:text="${rentalBook.bookId}"></span>
+					<h5 class="card-title fw-bold">
+						貸出中書籍確認
+					</h5>
+					<div class="mt-4">
+						<div class="form-label">書籍ID：</div>
+						<div th:text="${rentalDetail.bookId}" class="fs-5 border-bottom"></div>
 					</div>
-					<div class="mt-3 fs-5">
-						<span class="fw-bold">タイトル:</span>
-						<span th:text="${rentalBook.title}"></span>
+					<div class="mt-3">
+						<div class="form-label">タイトル：</div>
+						<div th:text="${rentalDetail.title}" class="fs-5 border-bottom"></div>
 					</div>
-					<div class="mt-3 fs-5">
-						<span class="fw-bold">著者:</span>
- 							<span th:text="${rentalBook.author}"></span>
+					<div class="mt-3">
+						<div class="form-label">著者：</div>
+ 						<div th:text="${rentalDetail.author}" class="fs-5 border-bottom"></div>
 					</div>
-					<div class="mt-3 fs-5">
-						<span class="fw-bold">貸出日:</span>
-						<span th:text="${#temporals.format(rentalBook.rentalLocalDate, 'yyyy年MM月dd日')}"></span>
+					<div class="mt-3">
+						<div class="form-label">貸出日：</div>
+ 						<div th:text="${#temporals.format(rentalDetail.dueLocalDate, 'yyyy年MM月dd日')}" class="fs-5 border-bottom"></div>
 					</div>
-					<div class="mt-3 fs-5">
-						<span class="fw-bold">返却日:</span>
-						<span th:text="${#temporals.format(rentalBook.dueLocalDate, 'yyyy年MM月dd日')}"></span>
+					<div class="mt-3">
+						<div class="form-label">返却日：</div>
+ 						<div th:text="${#temporals.format(rentalDetail.dueLocalDate, 'yyyy年MM月dd日')}" class="fs-5 border-bottom"></div>
 					</div>
 					<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" class="mt-5 btn btn-secondary w-100" />
 				</div>
 			</div>
 		</div>
-		<footer class="bg-dark-subtle">
+		<footer class="bg-light-subtle border-top bg-light-subtle">
 			<div class="text-center">
-				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+				<div class="py-3 text-muted">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
 			</div>
 		</footer>
 	</div>

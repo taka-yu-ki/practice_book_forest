@@ -42,6 +42,6 @@ public class AuthController {
 	public String logoutUser(HttpSession session) {
 		session.removeAttribute("user");
 
-		return "redirect:/auth/login";
+		return "redirect:/";
 	}
 }
