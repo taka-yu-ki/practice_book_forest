@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css ファイルの宣言 -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
 <!-- Bootstrap(css)の宣言 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- Bootstrap(javascript)の宣言 -->
@@ -11,9 +13,9 @@
 </head>
 <body>
 	<div class="d-flex flex-column vh-100">
-		<header class="border-bottom px-3 py-4">
+		<header class="px-3 py-4 bg-dark-subtle border-bottom border-dark-subtle">
 			<div class="d-flex align-items-center justify-content-between">
-				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+				<a href="/book_forest_takayukimuranaka" class="link-body-emphasis text-decoration-none fs-4">
 					Feepsネット図書館～図書の森～
 				</a> 
 				<div class="d-flex align-items-center fs-5">
@@ -26,14 +28,14 @@
 			</div>
 		</header>
 		<div class="d-flex flex-grow-1">
-			<div class="w-75 p-4">
-				<form action="/book_forest_takayukimuranaka/books/search" method="GET" class="mb-3">
+			<div class="p-4 w-75">
+				<form action="/book_forest_takayukimuranaka/books/search" method="GET">
 					<div class="d-flex mx-auto w-75">
 						<input type="text" name="title" class="form-control me-2" placeholder="書籍タイトルを入力" />
 						<input type="submit" value="検索" class="btn btn-primary" />
 					</div>
 				</form>
-				<p class="text-center">※貸出期間は本日から<span th:text="${rentalDate}"></span>日間です。</p>
+				<p class="mt-3 text-center">※貸出期間は本日から<span th:text="${rentalDate}"></span>日間です。</p>
 				<div th:if="${errorMessage}" class="border rounded bg-danger-subtle border-danger-subtle">
 					<div th:text="${errorMessage}" class="p-2 text-danger text-center"></div>
 				</div>
@@ -52,9 +54,9 @@
 							<td th:text="${book.title}"></td>
 							<td th:text="${book.author}"></td>
 							<td>
-								<button class="btn btn-success" th:onclick="|location.href='/book_forest_takayukimuranaka/books/${book.bookId}/rental'|">
-									借りる
-								</button>
+								<form th:action="@{/books/{bookId}/rental(bookId=${book.bookId})}" method="GET">
+									<input type="submit" value="借りる" class="btn btn-success" />
+								</form>
 							</td>
 						</tr>
 					</tbody>
@@ -63,25 +65,20 @@
 			<div class="w-25 p-4 border-start bg-light">
 				<div class="fs-5">貸出中書籍</div>
 				<div class="p-3 mt-3 border rounded bg-white">
-					<div th:if="${#lists.isEmpty(rentalBooks)}">
-						現在、貸出中の書籍はありません。
+					<div th:if="${#lists.isEmpty(rentalInfos)}">
+						<p>現在、貸出中の書籍はありません。</p>
 					</div>
-					<div th:unless="${#lists.isEmpty(rentalBooks)}" th:each="rentalBook : ${rentalBooks}">
-						<form action="/book_forest_takayukimuranaka/rentals" method="GET">
-							<input type="hidden" name="bookId" th:value="${rentalBook.book.bookId}" />
-							<input type="hidden" name="title" th:value="${rentalBook.book.title}" />
-							<input type="hidden" name="author" th:value="${rentalBook.book.author}" />
-							<input type="hidden" name="rentalLocalDate" th:value="${rentalBook.rentalLocalDate}" />
-							<input type="hidden" name="dueLocalDate" th:value="${rentalBook.dueLocalDate}" />
-							<input type="submit" th:value="${rentalBook.book.title}" class="btn btn-warning mt-3 w-100" />
+					<div th:unless="${#lists.isEmpty(rentalInfos)}" th:each="rentalInfo : ${rentalInfos}">
+						<form th:action="|/book_forest_takayukimuranaka/rentals/${rentalInfo.rentalId}|" method="GET">
+							<input type="submit" th:value="${rentalInfo.title}" class="btn btn-warning mt-3 w-100" />
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<footer class="bg-dark-subtle">
+		<footer class="bg-light-subtle border-top bg-light-subtle">
 			<div class="text-center">
-				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+				<div class="py-3 text-muted">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
 			</div>
 		</footer>
 	</div>

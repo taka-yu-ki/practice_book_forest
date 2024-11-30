@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.feeps.constants.DateConstants;
 import jp.co.feeps.dto.BookDTO;
-import jp.co.feeps.dto.RentalBookDTO;
+import jp.co.feeps.dto.RentalRequestDTO;
 import jp.co.feeps.entity.Book;
 import jp.co.feeps.form.BookSearchForm;
 import jp.co.feeps.repository.BookRepository;
@@ -40,6 +40,7 @@ public class BookService {
 
 		String title = form.getTitle();
 
+		// 検索文字列前後の空白を削除後、空文字であれば全権取得を行う
 		if (title != null && !title.trim().isEmpty()) {
 			books = bookRepository.findByTitleContaining(title);
 		} else {
@@ -62,23 +63,23 @@ public class BookService {
 		return bookDTOs;
 	}
 
-	public RentalBookDTO getRentalBook(int bookId) {
+	public RentalRequestDTO getRentalRequest(int bookId) {
 		Optional<Book> bookOpt = bookRepository.findById(bookId);
-
 		Book book = bookOpt.orElseThrow(() -> new RuntimeException("書籍が見つかりません"));
 
 		int rentalDate = DateConstants.RENTAL_DATE;
 
+		// 本日の日付と5日後(本日含め)の日付をここで生成する
 		LocalDate rentalLocalDate = LocalDate.now();
 		LocalDate dueLocalDate = rentalLocalDate.plusDays(rentalDate - 1);
 
-		RentalBookDTO rentalBookDTO = new RentalBookDTO();
-		rentalBookDTO.setBookId(book.getBookId());
-		rentalBookDTO.setTitle(book.getTitle());
-		rentalBookDTO.setAuthor(book.getAuthor());
-		rentalBookDTO.setRentalLocalDate(rentalLocalDate);
-		rentalBookDTO.setDueLocalDate(dueLocalDate);
+		RentalRequestDTO rentalRequestDTO = new RentalRequestDTO();
+		rentalRequestDTO.setBookId(book.getBookId());
+		rentalRequestDTO.setTitle(book.getTitle());
+		rentalRequestDTO.setAuthor(book.getAuthor());
+		rentalRequestDTO.setRentalLocalDate(rentalLocalDate);
+		rentalRequestDTO.setDueLocalDate(dueLocalDate);
 
-		return rentalBookDTO;
+		return rentalRequestDTO;
 	}
 }

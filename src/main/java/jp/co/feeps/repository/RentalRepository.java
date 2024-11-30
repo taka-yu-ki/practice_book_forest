@@ -2,6 +2,7 @@ package jp.co.feeps.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,8 @@ public interface RentalRepository extends JpaRepository<Rental, Integer> {
 
 	@Query("SELECT r FROM Rental r WHERE r.user.userId = :userId AND :today BETWEEN r.rentalDate AND r.dueDate ORDER BY r.dueDate ASC")
 	List<Rental> findBetweenRentalDateAndDueDate(@Param("userId") int userId, Date today);
+
+	Optional<Rental> findByRentalId(@Param("rentalId") int rentalId);
 
 	List<Rental> findByUserUserId(@Param("userId") int userId);
 }

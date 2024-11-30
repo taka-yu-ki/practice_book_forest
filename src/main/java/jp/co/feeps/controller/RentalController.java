@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
-import jp.co.feeps.dto.RentalBookDTO;
+import jp.co.feeps.dto.RentalDetailDTO;
 import jp.co.feeps.dto.RentalHistoryDTO;
 import jp.co.feeps.dto.UserDTO;
-import jp.co.feeps.form.RentalDetailForm;
 import jp.co.feeps.service.RentalService;
 
 @Controller
@@ -21,11 +21,11 @@ public class RentalController {
 	@Autowired
 	RentalService rentalService;
 
-	@GetMapping("")
-	public String showRentalBook(RentalDetailForm form, Model model) {
-		RentalBookDTO rentalBook = rentalService.convertFormToDTO(form);
+	@GetMapping("/{rentalId}")
+	public String showRentalBook(@PathVariable int rentalId, Model model) {
+		RentalDetailDTO rentalDetail = rentalService.getRentalDetail(rentalId);
 
-		model.addAttribute("rentalBook", rentalBook);
+		model.addAttribute("rentalDetail", rentalDetail);
 
 		return "current_rental_book";
 	}
