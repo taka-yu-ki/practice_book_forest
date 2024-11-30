@@ -33,7 +33,8 @@ public class RentalService {
 	private BookRepository bookRepository;
 
 	public void checkRentalBook(int userId, int bookId) throws IllegalStateException {
-		boolean isRental = rentalRepository.existsByUserUserIdAndBookBookId(userId, bookId);
+		Date today = new Date();
+		boolean isRental = rentalRepository.existsActiveRentalByUserIdAndBookId(userId, bookId, today);
 
 		if (isRental) {
 			throw new IllegalStateException("既に貸出中です。");

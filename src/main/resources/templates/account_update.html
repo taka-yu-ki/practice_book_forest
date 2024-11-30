@@ -2,24 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>ユーザー編集</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap(css)の宣言 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap(javascript)の宣言 -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<title>アカウント変更画面</title>
 </head>
 <body>
-	<form action="/book_forest_takayukimuranaka/user/edit/confirm" method="POST">
-		<div>
-			<label for="userName">お名前：</label>
-			<input type="text" name="userName" id="userName" th:value="${session.user.userName}" required />
+	<div class="d-flex flex-column vh-100">
+		<header class="border-bottom px-3 py-4">
+			<div class="d-flex align-items-center justify-content-between">
+				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+					Feepsネット図書館～図書の森～
+				</a> 
+				<div class="d-flex align-items-center fs-5">
+					<div class="me-3">
+						ようこそ <a href="/book_forest_takayukimuranaka/user/edit"><span th:text="${session.user.userName}"></span></a> さん
+					</div>
+					<a href="/book_forest_takayukimuranaka/auth/logout" class="btn btn-outline-danger">ログアウト</a>
+				</div>
+			</div>
+		</header>
+		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<form action="/book_forest_takayukimuranaka/user/edit/confirm" method="POST">
+				<div class="card" style="width: 22rem;">
+					<div class="card-body px-5 py-4">
+						<h5 class="card-title fw-bold">
+							アカウント変更
+						</h5>
+						<div class="mt-4">
+							<label for="userName" class="form-label">お名前</label>
+							<input type="text" name="userName" id="userName" th:value="${user.userName}" class="form-control w-100" required />
+						</div>
+						<div class="mt-3">
+							<label for="password" class="form-label">パスワード</label>
+							<input type="password" name="password" id="password" th:value="${user.password}" class="form-control" required />
+						</div>
+						<div class="mt-3">
+							<label for="email" class="form-label">メールアドレス(任意)</label>
+							<input type="text" name="email" id="email" th:value="${user.email}" class="form-control col-8" />
+						</div>
+						<div class="mt-4 d-flex gap-3">
+							<input type="submit" value="変更" class="btn btn-primary w-100" />
+							<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" class="btn btn-secondary w-100" />
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div>
-			<label for="password">パスワード：</label>
-			<input type="text" name="password" id="password" required />
-		</div>
-		<div>
-			<label for="email">メールアドレス：</label>
-			<input type="text" name="email" id="email" th:value="${session.user.email}" />
-		</div>
-		<input type="submit" value="確認" />
-		<input type="button" onClick="location.href='/book_forest_takayukimuranaka'" value="戻る" />
-	</form>
+		<footer class="bg-dark-subtle">
+			<div class="text-center">
+				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

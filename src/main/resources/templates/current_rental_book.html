@@ -2,25 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap(css)の宣言 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap(javascript)の宣言 -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 <title>貸出中書籍確認画面</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<th>書籍ID</th>
-			<th>タイトル</th>
-			<th>著者</th>
-			<th>貸出日</th>
-			<th>返却日</th>
-		</tr>
-		<tr>
-			<td th:text="${rentalBook.bookId}"></td>
-			<td th:text="${rentalBook.title}"></td>
-			<td th:text="${rentalBook.author}"></td>
-			<td th:text="${#temporals.format(rentalBook.rentalLocalDate, 'yyyy年MM月dd日')}"></td>
-			<td th:text="${#temporals.format(rentalBook.dueLocalDate, 'yyyy年MM月dd日')}"></td>
-		</tr>
-	</table>
-	<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" />
+	<div class="d-flex flex-column vh-100">
+		<header class="border-bottom px-3 py-4">
+			<div class="d-flex align-items-center justify-content-between">
+				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+					Feepsネット図書館～図書の森～
+				</a> 
+				<div class="d-flex align-items-center fs-5">
+					<div class="me-3">
+						ようこそ <a href="/book_forest_takayukimuranaka/user/edit"><span th:text="${session.user.userName}"></span></a> さん
+					</div>
+					<a href="/book_forest_takayukimuranaka/auth/logout" class="btn btn-outline-danger">ログアウト</a>
+				</div>
+			</div>
+		</header>
+		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<div class="card">
+				<div class="card-body px-5 py-4">
+					<div class="mt-4 fs-5">
+						<span class="fw-bold">書籍ID:</span>
+						<span th:text="${rentalBook.bookId}"></span>
+					</div>
+					<div class="mt-3 fs-5">
+						<span class="fw-bold">タイトル:</span>
+						<span th:text="${rentalBook.title}"></span>
+					</div>
+					<div class="mt-3 fs-5">
+						<span class="fw-bold">著者:</span>
+ 							<span th:text="${rentalBook.author}"></span>
+					</div>
+					<div class="mt-3 fs-5">
+						<span class="fw-bold">貸出日:</span>
+						<span th:text="${#temporals.format(rentalBook.rentalLocalDate, 'yyyy年MM月dd日')}"></span>
+					</div>
+					<div class="mt-3 fs-5">
+						<span class="fw-bold">返却日:</span>
+						<span th:text="${#temporals.format(rentalBook.dueLocalDate, 'yyyy年MM月dd日')}"></span>
+					</div>
+					<input type="button" onClick="location.href='/book_forest_takayukimuranaka/books'" value="戻る" class="mt-5 btn btn-secondary w-100" />
+				</div>
+			</div>
+		</div>
+		<footer class="bg-dark-subtle">
+			<div class="text-center">
+				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

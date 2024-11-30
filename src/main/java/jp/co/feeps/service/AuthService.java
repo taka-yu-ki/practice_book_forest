@@ -20,12 +20,12 @@ public class AuthService {
 		String password = form.getPassword();
 
 		Optional<User> userOpt = userRepository.findByUserIdAndPassword(userId, password);
-
-		User user = (User) userOpt.orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+		User user = (User) userOpt.orElseThrow(() -> new RuntimeException("ログインIDもしくはパスワードが違います。"));
 
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUserId(user.getUserId());
 		userDTO.setUserName(user.getUserName());
+		userDTO.setPassword(user.getPassword());
 		userDTO.setEmail(user.getEmail());
 
 		return userDTO;

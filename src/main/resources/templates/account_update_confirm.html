@@ -2,30 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>ユーザー編集確認</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap(css)の宣言 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- Bootstrap(javascript)の宣言 -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<title>アカウント変更確認画面</title>
 </head>
 <body>
-	<form action="/book_forest_takayukimuranaka/user/edit/update" method="POST">
-		<div>
-			<p>お名前：</p>
-			<p th:text="${session.form.userName}"></p>
+	<div class="d-flex flex-column vh-100">
+		<header class="border-bottom px-3 py-4">
+			<div class="d-flex align-items-center justify-content-between">
+				<a href="/book_forest_takayukimuranaka/" class="link-body-emphasis text-decoration-none fs-4">
+					Feepsネット図書館～図書の森～
+				</a> 
+				<div class="d-flex align-items-center fs-5">
+					<div class="me-3">
+						ようこそ <a href="/book_forest_takayukimuranaka/user/edit"><span th:text="${session.user.userName}"></span></a> さん
+					</div>
+					<a href="/book_forest_takayukimuranaka/auth/logout" class="btn btn-outline-danger">ログアウト</a>
+				</div>
+			</div>
+		</header>
+		<div class="d-flex flex-grow-1 justify-content-center align-items-center">
+			<form action="/book_forest_takayukimuranaka/user/edit/update" method="POST">
+				<div class="card" style="width: 22rem;">
+					<div class="card-body px-5 py-4">
+						<h5 class="card-title fw-bold">
+							アカウント変更内容確認
+						</h5>
+						<div class="mt-4">
+							<div class="form-label">お名前：</div>
+							<div th:text="${form.userName}" class="fs-5 border-bottom"></div>
+						</div>
+						<div class="mt-3">
+							<div class="form-label">パスワード：</div>
+							<div class="border-bottom">※ 非表示</div>
+						</div>
+						<div class="mt-3">
+							<div class="form-label">メールアドレス：</div>
+							<div th:unless="${#strings.isEmpty(form.email)}" th:text="${form.email}" class="fs-5 border-bottom"></div>
+							<div th:if="${#strings.isEmpty(form.email)}" class="border-bottom">なし</div>
+						</div>
+						<div class="mt-4">
+							<input type="hidden" name="userName" th:value="${form.userName}" required />
+							<input type="hidden" name="password" th:value="${form.password}" required />
+							<input type="hidden" name="email" th:value="${form.email}" />
+							<div class="d-flex gap-3">
+								<input type="submit" value="登録" class="btn btn-primary w-100" />
+								<input type="button" onClick="location.href='/book_forest_takayukimuranaka/user/edit'" value="戻る" class="btn btn-secondary w-100" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div>
-			<p>パスワード：</p>
-			<p>※ 非表示</p>
-		</div>
-		<div>
-			<p>メールアドレス：</p>
-			<p th:unless="${#strings.isEmpty(session.form.email)}" th:text="${session.form.email}"></p>
-			<p th:if="${#strings.isEmpty(session.form.email)}">なし</p>
-		</div>
-		<div>
-			<input type="hidden" name="userName" th:value="${session.form.userName}" required />
-			<input type="hidden" name="password" th:value="${session.form.password}" required />
-			<input type="hidden" name="email" th:value="${session.form.email}" required />
-			<input type="submit" value="登録" />
-			<input type="button" onClick="location.href='/book_forest_takayukimuranaka/user/edit'" value="戻る" />
-		</div>
-	</form>
+		<footer class="bg-dark-subtle">
+			<div class="text-center">
+				<div class="text-muted py-3">COPYRIGHT © 2024 takayuki muranaka - ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

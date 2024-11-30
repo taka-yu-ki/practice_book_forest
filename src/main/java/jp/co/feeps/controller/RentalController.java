@@ -37,9 +37,6 @@ public class RentalController {
 
 		List<RentalHistoryDTO> rentalHistories = rentalService.getRentalHistories(userId);
 
-		boolean isEmptyRentalHistory = rentalHistories.isEmpty();
-		model.addAttribute("isEmptyRentalHistory", isEmptyRentalHistory);
-
 		model.addAttribute("rentalHistories", rentalHistories);
 
 		return "history";
